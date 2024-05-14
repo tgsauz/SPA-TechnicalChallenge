@@ -1,10 +1,10 @@
 import { Home } from './components/home.js';
 import { NotFound } from './components/notfound.js';
-import { Colors } from './components/colors.js';
+import { Info } from './components/info.js';
 
 export class Router {
-    constructor(appContainer) {
-        this.appContainer = appContainer;
+    constructor(mainContainer) {
+        this.mainContainer = mainContainer;
     }
 
     init() {
@@ -17,23 +17,45 @@ export class Router {
 
     handleRouteChange() {
         // Obtener la ruta actual desde la URL
-        const route = window.location.hash.slice(1);
+        let route = window.location.hash.slice(1);
+
+        if (!route && route === '') {
+            route = 'home';
+        }
 
         // Renderizar contenido correspondiente a la ruta
         this.renderRoute(route);
     }
 
     renderRoute(route) {
-        // Lógica para renderizar contenido basado en la ruta
-        switch (route) {
-            case 'home':
-                this.appContainer.innerHTML = Home();
-                break;
-            case 'colors':
-                this.appContainer.innerHTML = Colors();
-                break;
-            default:
-                this.appContainer.innerHTML = NotFound();
-        }
+        console.log(`Rendering route: ${route}`)
+        this.mainContainer.classList.add('transition');
+
+        // Simular un tiempo de carga
+        setTimeout(() => {
+
+            // Lógica para renderizar contenido basado en la ruta
+            switch (route) {
+                case 'home':
+                    console.log('Rendering home');
+                    this.mainContainer.innerHTML = Home();
+                    break;
+                case 'info':
+                    console.log('Rendering info');
+                    this.mainContainer.innerHTML = Info();
+                    break;
+                default:
+                    console.log('Rendering not found');
+                    this.mainContainer.innerHTML = NotFound();
+            }
+
+            this.mainContainer.classList.remove('transition');
+            this.mainContainer.classList.add('transition-in');
+
+            setTimeout(() => {
+                this.mainContainer.classList.remove('transition-in');
+            }, 1000);
+        }, 500);
+
     }
 }

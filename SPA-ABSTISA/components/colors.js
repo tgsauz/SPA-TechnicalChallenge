@@ -1,4 +1,4 @@
-export function Colors() {
+export function initializeColors() {
     let paletteContainer = document.querySelector('.palette-container');
 
     if (!paletteContainer) {
@@ -7,11 +7,33 @@ export function Colors() {
         document.body.appendChild(paletteContainer);
     }
 
-    const colorBoxes = Array.from({length: 6}, () => document.createElement('div'));
+    paletteContainer.className = 'palette-container';
 
-    colorBoxes.forEach((colorBox) => {
-        colorBox.className = 'color-box';
-        paletteContainer.appendChild(colorBox);
+    let colorBoxes = Array.from(paletteContainer.getElementsByClassName('color-box'));
+
+    if (colorBoxes.length === 0) {
+        colorBoxes = Array.from({length: 6}, () => document.createElement('div'));
+
+        colorBoxes.forEach((colorBox) => {
+            colorBox.className = 'color-box';
+            paletteContainer.appendChild(colorBox);
+        });
+    }
+
+    document.body.appendChild(paletteContainer);
+}
+
+export function Colors() {
+
+    const baseColor = Math.floor(Math.random() * 360);
+
+    const newColorPalette = generateColorPalette(baseColor);
+
+    const colorBoxes = document.querySelectorAll('.color-box');
+
+    // Update the background color of the color boxes
+    colorBoxes.forEach((colorBox, index) => {
+        colorBox.style.backgroundColor = newColorPalette[index];
     });
 
     // Función para generar una paleta de colores
