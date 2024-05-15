@@ -1,11 +1,11 @@
 export function initializeColors() {
     let paletteContainer = document.querySelector('.palette-container');
-    const appContainer = document.getElementById('app');
+    const mainContainer = document.getElementById('main-content');
 
     if (!paletteContainer) {
         paletteContainer = document.createElement('div');
         paletteContainer.className = 'palette-container';
-        appContainer.appendChild(paletteContainer);
+        mainContainer.appendChild(paletteContainer);
     }
 
     paletteContainer.className = 'palette-container';

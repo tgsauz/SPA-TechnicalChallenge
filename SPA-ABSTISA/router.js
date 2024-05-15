@@ -1,10 +1,9 @@
-import { Home } from './components/home.js';
-import { NotFound } from './components/notfound.js';
-import { Info } from './components/info.js';
-
 export class Router {
-    constructor(mainContainer) {
+    constructor(mainContainer, infoContainer, notFoundContainer) {
         this.mainContainer = mainContainer;
+        this.homeContainer = document.querySelector('.palette-container');
+        this.infoContainer = infoContainer;
+        this.notFoundContainer = notFoundContainer;
     }
 
     init() {
@@ -14,7 +13,7 @@ export class Router {
         // Manejar la ruta inicial
         this.handleRouteChange();
     }
-
+    
     handleRouteChange() {
         // Obtener la ruta actual desde la URL
         let route = window.location.hash.slice(1);
@@ -28,34 +27,26 @@ export class Router {
     }
 
     renderRoute(route) {
-        console.log(`Rendering route: ${route}`)
-        this.mainContainer.classList.add('transition');
+        console.log(`Rendering route: ${route}`);
 
-        // Simular un tiempo de carga
-        setTimeout(() => {
+        // Hide all containers
+        [this.homeContainer, this.infoContainer, this.notFoundContainer].forEach(container => {
+            container.classList.add('hidden');
+        });
 
-            // Lógica para renderizar contenido basado en la ruta
-            switch (route) {
-                case 'home':
-                    console.log('Rendering home');
-                    this.mainContainer.innerHTML = Home();
-                    break;
-                case 'info':
-                    console.log('Rendering info');
-                    this.mainContainer.innerHTML = Info();
-                    break;
-                default:
-                    console.log('Rendering not found');
-                    this.mainContainer.innerHTML = NotFound();
-            }
-
-            this.mainContainer.classList.remove('transition');
-            this.mainContainer.classList.add('transition-in');
-
-            setTimeout(() => {
-                this.mainContainer.classList.remove('transition-in');
-            }, 1000);
-        }, 500);
-
+        // Show the container corresponding to the current route
+        switch (route) {
+            case 'home':
+                console.log('Rendering home');
+                this.homeContainer.classList.toggle('hidden');
+                break;
+            case 'info':
+                console.log('Rendering info');
+                this.infoContainer.classList.toggle('hidden');
+                break;
+            default:
+                console.log('Rendering not found');
+                this.notFoundContainer.classList.toggle('hidden');
+        }
     }
 }
