@@ -4,3 +4,13 @@
     Access-Control-Allow-Origin = "*"
     Access-Control-Allow-Methods = "GET, POST, OPTIONS"
     Access-Control-Allow-Headers = "Content-Type"
+
+[build]
+  base = "SPA-ABSTISA"
+  publish = "SPA-ABSTISA/dist"
+  functions = "SPA-ABSTISA/netlify/functions"
+
+[[headers]]
+  for = "/assets/*.svg"
+  [headers.values]
+    Content-Type = "image/svg+xml"
