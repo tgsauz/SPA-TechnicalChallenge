@@ -41,6 +41,26 @@ export function Colors() {
         return generateColorScheme(baseColor, lockedColors);
     }
 
+    // Función para obtener el nombre del color usando api
+    function getColorName(h, s, l, index) {
+        const callbackName = `handleColorResponse${index}`;
+        window[callbackName] = function (data) {
+            handleColorResponse(data, index);
+            delete window[callbackName];
+            document.body.removeChild(script);
+        };
+        const url = `https://www.thecolorapi.com/id?hsl=${h},${s}%,${l}%&callback=${callbackName}`;
+        const script = document.createElement('script');
+        script.src = url;
+        document.body.appendChild(script);
+    }
+
+    function handleColorResponse(data, index) {
+        const colorBox = document.querySelectorAll('.color-box')[index];
+        colorBox.querySelector('.color-name').textContent = data.name.value;
+    }
+    
+
     // Función para generar combinaciones de colores armoniosas
     function generateColorScheme(baseColor, lockedColors) {
         const colorsInScheme = [];
@@ -141,10 +161,7 @@ export function Colors() {
         if (!colorBox.classList.contains('locked')) {
             let hslColor= `hsl(${palette[index].hue}, ${palette[index].saturation}%, ${palette[index].lightness}%)`;
             colorBox.style.backgroundColor = hslColor
-            getColorName(palette[index].hue, palette[index].saturation, palette[index].lightness)
-            .then(name => {
-                colorBox.querySelector('.color-name').textContent = name;
-            });
+            getColorName(palette[index].hue, palette[index].saturation, palette[index].lightness, index);
         }
     });
 
@@ -161,47 +178,20 @@ export function Colors() {
 
     
     // Guardar los colores lockeados
-    colorBoxes.forEach((colorBox, index) => {
-        if (colorBox.classList.contains('locked')) {
-            const backgroundColor = colorBox.style.backgroundColor;
-            const hsl = backgroundColor.substring(4, backgroundColor.length-1)
-                .split(',')
-                .map(num => Number(num));
-            lockedColors[index] = { hue: hsl[0], saturation: hsl[1], lightness: hsl[2], name: colorBox.querySelector('.color-name').textContent};
+    colorBoxesArray.forEach((colorBox, index) => {
+        if (!colorBox.classList.contains('locked')) {
+            let hslColor = `hsl(${palette[index].hue}, ${palette[index].saturation}%, ${palette[index].lightness}%)`;
+            colorBox.style.backgroundColor = hslColor;
+            getColorName(palette[index].hue, palette[index].saturation, palette[index].lightness, index); // Aquí removemos el uso de .then
         }
-        console.log("hue value: ", colorBox.style.backgroundColor)
     });
 
-    // Función para obtener el nombre del color usando api
-    function getColorName(h, s, l, index) {
-        const callbackName = `handleColorResponse${index}`;
-        window[callbackName] = function(data) {
-            handleColorResponse(data, index);
-            delete window[callbackName];
-            document.body.removeChild(script);
-        };
-        const url = `https://www.thecolorapi.com/id?hsl=${h},${s}%,${l}%&callback=${callbackName}`;
-        const script = document.createElement('script');
-        script.src = url;
-        document.body.appendChild(script);
-    }
-
-    function handleColorResponse(data, index) {
-        const colorBox = document.querySelectorAll('.color-box')[index];
-        const hslColor = `hsl(${data.hsl.h}, ${data.hsl.s}%, ${data.hsl.l}%)`;
-        colorBox.style.backgroundColor = hslColor;
-        colorBox.textContent = data.name.value;
-    }
-    
     //Aplicar colores  y nombres a los cuadros
     colorBoxesArray.forEach((colorBox, index) => {
         if (colors[index]) {
-            let hslColor= `hsl(${colors[index].hue}, ${colors[index].saturation}%, ${colors[index].lightness}%)`;
-            colorBox.style.backgroundColor = hslColor
-            getColorName(colors[index].hue, colors[index].saturation, colors[index].lightness)
-            .then(name => {
-                colorBox.querySelector('.color-name').textContent = name;
-            });
+            let hslColor = `hsl(${colors[index].hue}, ${colors[index].saturation}%, ${colors[index].lightness}%)`;
+            colorBox.style.backgroundColor = hslColor;
+            getColorName(colors[index].hue, colors[index].saturation, colors[index].lightness, index); // Aquí removemos el uso de .then
         }
     });
 
