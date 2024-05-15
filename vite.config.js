@@ -14,6 +14,7 @@ export default {
           '/public/lock.svg',
           '/public/unlock.svg',
           '/public/TGicon.jpg',
+          'public/_redirects',
         ],
       },
     },
