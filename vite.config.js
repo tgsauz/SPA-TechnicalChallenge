@@ -9,7 +9,7 @@ export default {
           '/components/nav.js',
           '/components/colors.js',
           '/components/home.js',
-          '/components/about.js',
+          '/components/info.js',
           '/components/notfound.js',
           '/public/lock.svg',
           '/public/unlock.svg',
