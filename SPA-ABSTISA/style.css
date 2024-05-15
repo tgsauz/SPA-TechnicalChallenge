@@ -85,12 +85,12 @@
 }
 
 .lock-button::before {
-  background-image: url('unlock.svg');
+  background-image: url('/assets/unlock.svg');
   opacity: 1;
 }
 
 .lock-button::after {
-  background-image: url('lock.svg');
+  background-image: url('/assets/lock.svg');
   opacity: 0;
 }
 

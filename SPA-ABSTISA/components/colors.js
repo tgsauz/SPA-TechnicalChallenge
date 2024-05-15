@@ -174,7 +174,14 @@ export function Colors() {
 
     // Función para obtener el nombre del color usando api
     function getColorName(h, s, l){
-        return fetch(`http://www.thecolorapi.com/id?hsl=${h},${s},${l}`)
+        return fetch(`http://www.thecolorapi.com/id?hsl=${h},${s},${l}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*'
+            }
+        
+        })
         .then(response => response.json())
         .then(data => data.name.value)
         .catch(error => {
