@@ -1,8 +1,9 @@
-import './style.css'
-import { Router } from '/router.js'
-import Nav from '/components/nav.js'
-import Info from '/components/info.js'
-import NotFound from '/components/notfound.js'
+import './index.html';
+import './style.css';
+import { Router } from '/router.js';
+import Nav from '/components/nav.js';
+import Info from '/components/info.js';
+import NotFound from '/components/notfound.js';
 import { initializeColors, Colors } from './components/colors';
 
 window.addEventListener('keypress', event => {
