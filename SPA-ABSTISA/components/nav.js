@@ -7,7 +7,7 @@ export default function Nav() {
             </ul>
             <section class="promoauth">
                 <span>Color Palette Generator</span>
-                <span> by: <a href="tgsauz.github.io">tgsauz</a></span>
+                <span> by: <a href="https://tgsauz.github.io"target="_blank">tgsauz</a></span>
             </div>
         </nav>
     `;
