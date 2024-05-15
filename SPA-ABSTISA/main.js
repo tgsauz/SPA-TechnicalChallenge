@@ -1,4 +1,3 @@
-import './index.html';
 import './style.css';
 import { Router } from '/router.js';
 import Nav from '/components/nav.js';
